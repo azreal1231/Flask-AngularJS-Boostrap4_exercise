@@ -1,0 +1,8 @@
+#   TODO - link style.ccs to index.html.
+#   TODO - Bind the data that is being returned from server to an angularJS var.
+#   TODO - Make a table with the Users data "Show only what you feel is important".
+#   TODO - Make the Table Look nice by applying Bootsrap4 - you might have to import it.
+#   TODO - BONUS if you can add some filtering to that table.
+#   TODO - Comment out that style.css link cuz that bluw looks strange.
+
+
