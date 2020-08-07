@@ -6,7 +6,50 @@
     <title>exercise</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 </head>
-<body>
-    
+<body ng-app="myApp" ng-controller="myCtrl">
+
 </body>
 </html>
+<script>
+var app = angular.module('myApp', []);
+
+app.factory('GetDataService', ['$http', function ($http) {
+    var GetDataService = {};
+
+    GetDataService.Call = function (method, param) {
+        return  $http({method:'POST',
+            url:'/get-data',
+                data:ConvertDicToPostString({
+                    'de' : method,
+                    'params' : JSON.stringify(param)
+                }),
+                headers:{'Content-Type': 'application/x-www-form-urlencoded'}
+                });
+    };
+
+    return GetDataService;
+
+    function ConvertDicToPostString(vDic) {
+        var Texter = '';
+                for (var key in vDic) {
+                Texter = Texter + key + '=' + vDic[key] + '&';
+        }
+        return Texter;
+    };
+}]);
+
+app.controller('myCtrl', function($scope, $http, GetDataService) 
+{
+
+GetDataService.Call('ReturnUsers', 'AllUsers').then(
+    function(_response)
+    {
+        alert('We have Data!');
+    },
+    function(_response)
+    {
+        alert('Search Error');
+    }
+);
+});
+</script>
