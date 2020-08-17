@@ -1,55 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>exercise</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-</head>
+
+{% extends 'base.html' %}
+
+{% block body %}
+
 <body ng-app="myApp" ng-controller="myCtrl">
 
+    <div class="container">
+        <form class="form border border-info">
+            <div class="form-group row text-light">
+                <label class="col-2 d-none d-sm-block">Name</label>
+                <label class="col-2 d-none d-sm-block">Cash</label>
+                <label class="col-4 d-none d-sm-block">Email</label>
+                <label class="col-2 d-none d-sm-block">Number</label>
+                <label class="col-2 d-none d-sm-block">Risk</label>
+            </div>
+            <div ng-repeat="user in users | filter:filters.cmd" class="form-group row">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-inline">
+                        <label class='text-light col-3 d-block d-sm-none '>Name</label>
+                        <label class='text-light'>[[user.name]]</label>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-inline">
+                        <label class='text-light col-3  d-block d-sm-none '>Cash</label>
+                        <label class='text-light'>[[user.cash]]</label>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-inline">
+                        <label class='text-light col-3  d-block d-sm-none '>Email</label>
+                        <label class='text-light'>[[user.email]]</label>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-inline">
+                        <label class='text-light col-3  d-block d-sm-none '>Number</label>
+                        <label class='text-light'>[[user.number]]</label>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-inline">
+                        <label class='text-light col-3  d-block d-sm-none '>Risk</label>
+                        <label class='text-light'>[[user.risk]]</label>
+                    </div>
+                </div>
+                <hr class="text-light w-75 d-block d-sm-none bg-primary">
+            </div>
+        </form>
+    </div>
+
+    <br><br><br>
+
+    <div class="container table-responsive">
+        <div class="input-group">
+            <input ng-model="filters.cmd" type="text" placeholder="search" class="form-control"
+                aria-describedby="basic-addon2">
+        </div>
+
+        <table class="table table-hover table-dark">
+            <tr>
+                <th> </th>
+                <th> <select ng-model="filters.namesFilter" ng-options="name for name in filters.names"
+                        ng-change="udpateFilterCmd(filters.namesFilter)" class="form-control-sm bg-dark text-light">
+                    </select> </th>
+                <th> <input type="number" ng-model="filters.cashFilter" ng-change="udpateFilterCmd(filters.cashFilter)">
+                </th>
+                <th> Email </th>
+                <th> Number </th>
+                <th> <select ng-model="filters.riskFilter" ng-options="r for r in filters.risk"
+                        ng-change="udpateFilterCmd(filters.riskFilter)" class="form-control-sm bg-dark text-light">
+                    </select> </th>
+            </tr>
+            <tr ng-repeat="user in users | filter:filters.cmd" ng-click="viewUser(user)">
+                <td> [[ $index ]] </td>
+                <td>[[ user.name ]]</td>
+                <td>[[ user.cash | currency:'R' ]] </td>
+                <td>[[ user.email ]]</td>
+                <td>[[ user.number ]]</td>
+                <td>[[ user.risk ]]</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="container box" ng-show="displayVars.viewUser">
+        <button class="btnX text-light" style="background: transparent;"
+            ng-click="displayVars.viewUser = false;">X</button>
+        <form class="info text-dark">
+            <label class="text-dark col-6 ">Username</label><label class="text-dark col-6">
+                [[selectedUser.name]]</label>
+            <label class="text-dark col-6 ">Amont of cash</label><label class="text-dark col-6">
+                [[selectedUser.cash]]</label>
+            <label class="text-dark col-6 ">Email address</label><label class="text-dark col-6"> <input
+                    class="form-control w-100" style="background: transparent; border: none;" readonly
+                    ng-model="selectedUser.email" type="text"></label>
+            <label class="text-dark col-6 ">Phone number</label><label class="text-dark col-6">
+                [[selectedUser.number]]</label>
+            <label class="text-dark col-6 ">Degree of risk</label><label class="text-dark col-6">
+                [[selectedUser.risk]]</label>
+            <button class="btnEdit" ng-click="editPage(selectedUser)">Edit</button>
+            <button><a href="/second-page">click here for the second page</a></button>
+        </form>
+    </div>
+
 </body>
+
 </html>
+
 <script>
-var app = angular.module('myApp', []);
+    var app = angular.module('myApp', []).config(['$interpolateProvider', function ($interpolateProvider) {
+        $interpolateProvider.startSymbol('[[');
+        $interpolateProvider.endSymbol(']]');
+    }]);;
 
-app.factory('GetDataService', ['$http', function ($http) {
-    var GetDataService = {};
+    app.factory('GetDataService', ['$http', function ($http) {
+        var GetDataService = {};
 
-    GetDataService.Call = function (method, param) {
-        return  $http({method:'POST',
-            url:'/get-data',
-                data:ConvertDicToPostString({
-                    'de' : method,
-                    'params' : JSON.stringify(param)
+        GetDataService.Call = function (method, param) {
+            return $http({
+                method: 'POST',
+                url: '/get-data',
+                data: ConvertDicToPostString({
+                    'de': method,
+                    'params': JSON.stringify(param)
                 }),
-                headers:{'Content-Type': 'application/x-www-form-urlencoded'}
-                });
-    };
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            });
+        };
 
-    return GetDataService;
+        return GetDataService;
 
-    function ConvertDicToPostString(vDic) {
-        var Texter = '';
-                for (var key in vDic) {
+        function ConvertDicToPostString(vDic) {
+            var Texter = '';
+            for (var key in vDic) {
                 Texter = Texter + key + '=' + vDic[key] + '&';
+            }
+            return Texter;
+        };
+    }]);
+
+    app.controller('myCtrl', function ($scope, $http, GetDataService) {
+
+        function makeFilterArray(_filterCmd, _filterHeader, _dataHeader, _data) {
+            for (i in _data) {
+                var y = _data[i][_dataHeader]
+
+                if (!$scope.filters[_filterHeader].includes(y)) {
+                    $scope.filters[_filterHeader].push(y);
+                }
+            }
+            $scope.filters[_filterHeader].push(_dataHeader);
         }
-        return Texter;
-    };
-}]);
 
-app.controller('myCtrl', function($scope, $http, GetDataService) 
-{
+        $scope.users = [];
+        $scope.displayVars = {
+            "viewUser": false
+        }
+        $scope.filters = {
+            'cmd': '',
+            'names': [],
+            'namesFilter': 'name',
+            'cash': [],
+            'cashFilter': '',
+            'risk': [],
+            'riskFilter': 'risk'
+        };
 
-GetDataService.Call('ReturnUsers', 'AllUsers').then(
-    function(_response)
-    {
-        alert('We have Data!');
-    },
-    function(_response)
-    {
-        alert('Search Error');
-    }
-);
-});
+        $scope.udpateFilterCmd = function (_filterCmd) {
+
+            if (_filterCmd == "name" || _filterCmd == "cash" || _filterCmd == "risk") {
+                $scope.filters.cmd = "";
+            } else {
+                $scope.filters.cmd = _filterCmd;
+            }
+        }
+
+        $scope.chagneOrderBy = function (x) {
+            $scope.newOrderBy = x
+        }
+
+        $scope.viewUser = function (_user) {
+            $scope.displayVars.viewUser = true;
+            $scope.selectedUser = _user;
+        }
+
+        $scope.editPage = function (_userData) {
+            var name = _userData.name;
+            var cash = _userData.cash;
+            var risk = _userData.risk;
+            var number = _userData.number;
+            var email = _userData.email;
+
+            console.log(window.location.href)
+            // window.location = "/edit/" + "-" + name + "-" + cash + "-" + risk + "-" + number + "-" + email
+            location.replace("/edit/" + "-" + name + "-" + cash + "-" + risk + "-" + number + "-" + email)
+        }
+
+        GetDataService.Call('ReturnUsers', 'AllUsers').then(
+            function (_response) {
+                $scope.users = _response['data']['Records']
+                makeFilterArray("namesFilter", "names", "name", $scope.users)
+                console.log($scope.filters)
+                makeFilterArray("cashFilter", "cash", "cash", $scope.users)
+                makeFilterArray("riskFilter", "risk", "risk", $scope.users)
+            },
+            function (_response) {
+                alert('Search Error');
+            }
+        );
+    });
+
 </script>
+
+{% endblock %}
