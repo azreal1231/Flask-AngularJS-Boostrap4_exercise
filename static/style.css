@@ -1,6 +1,6 @@
-*{
+/* *{
     color: white;
-}
+} */
 
 body {
     background-color: rgb(26, 26, 26);
@@ -37,10 +37,10 @@ body {
     position: relative;
     left: 50%; 
 }
-
+/* 
 .extraInfo label{
     color: yellow;
-}
+} */
 
 /* .infoHeading{
     position: relative;

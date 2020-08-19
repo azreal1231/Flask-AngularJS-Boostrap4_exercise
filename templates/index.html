@@ -7,7 +7,7 @@
 
 <body ng-app="myApp" ng-controller="myCtrl">
 
-    <div class="container">
+    <div class="container-fluid">
         <form class="form border border-info">
             <div class="form-group row text-light">
                 <!-- Headings -->
@@ -18,75 +18,74 @@
                 <label class="col-2 d-none d-sm-block">Risk</label>
             </div>
             <!-- Rows populated with ng-repeat -->
-            <div ng-repeat="user in users| filter:filters.cmd track by $index" class="form-group row"
-                data-toggle="collapse" data-target="#entryInfo[[$index]]" ng-click="editData(user)">
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+            <div ng-repeat="user in users| filter:filters.cmd" class="form-group row shadow-sm  border-bottom  border-info" data-toggle="collapse" data-target="#collapse_[[$index]]"   ng-click="editData(user)">
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
                     <div class="form-inline">
-                        <label class='text-light col-3 d-block d-sm-none '>Name</label>
-                        <label class='text-light'>[[user.name]]</label>
+                        <label class="d-block d-sm-none col-3 text-white">Name</label>
+                        <label class="text-white p-1">[[ user.name ]]</label>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
                     <div class="form-inline">
-                        <label class='text-light col-3  d-block d-sm-none '>Cash</label>
-                        <label class='text-light'>[[user.cash]]</label>
+                        <label class="d-block d-sm-none col-3 text-white">Cash</label>
+                        <label ><a target="_blank" class="p-1 text-info">[[ user.cash ]]</a></label>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                     <div class="form-inline">
-                        <label class='text-light col-3  d-block d-sm-none '>Email</label>
-                        <label class='text-light'>[[user.email]]</label>
+                        <label class="d-block d-sm-none col-3 text-white">Email</label>
+                        <label ><a target="_blank" class="p-1 text-info">[[ user.email ]]</a></label>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-inline">
-                        <label class='text-light col-3  d-block d-sm-none '>Number</label>
-                        <label class='text-light'>[[user.number]]</label>
+                        <label class="d-block d-sm-none col-3 text-white">Number</label>
+                        <label ><a target="_blank" class="p-1 text-info">[[ user.number ]]</a></label>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-inline">
-                        <label class='text-light col-3  d-block d-sm-none '>Risk</label>
-                        <label class='text-light'>[[user.risk]]</label>
+                        <label class="d-block d-sm-none col-3 text-white">Risk</label>
+                        <label ><a target="_blank" class="p-1 text-info">[[ user.risk ]]</a></label>
                     </div>
                 </div>
-
-                <!-- The extra info div -->
-                <div id="entryInfo[[$index]]" class="container-fluid collapse extraInfo">
-                    <br>
-                    <div class="form-group row">
-                        <label class='infoHeading col-2'>Name</label>
-                        <div class="col">
-                            <label>[[user.Joshua]]</label>
+                
+                <div class="container-fluid menu-collapse collapse ml-1" style="text-align: left;" id="collapse_[[$index]]">
+                    <form class="form">
+                        <div class="form-group row">
+                            <hr class="w-75" style="background: yellow;">
+                            <div class="col-12 row form-inline" align="left">
+                                <label class="col-3 text-white">Name</label>
+                                <div class="col">
+                                    <input ng-model="user.Joshua" type="text" class="form-control-sm text-white border border-white w-100" style="background: transparent;">
+                                </div>
+                            </div>
+                            <div class="col-12 row form-inline" align="justify">
+                                <label class="col-3 text-white">Cash</label>
+                                <div class="col">
+                                    <input ng-model="user.cash" type="text" class="form-control-sm text-white border border-white w-100" style="background: transparent;">
+                                </div>
+                            </div>
+                            <div class="col-12 row form-inline">
+                                <label class="col-3 text-white">Email</label>
+                                <div class="col">
+                                    <input ng-model="user.email" type="text" class="form-control-sm text-white border border-white w-100" style="background: transparent;">
+                                </div>
+                            </div>
+                            <div class="col-12 row form-inline">
+                                <label class="col-3 text-white">Number</label>
+                                <div class="col">
+                                    <input ng-model="user.number" type="text" class="form-control-sm text-white border border-white w-100" style="background: transparent;">
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class='infoHeading col-2'>Cash</label>
-                        <div class="form-inline">
-                            <label class='col'>[[user.cash]]</label>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class='infoHeading col-2'>Risk</label>
-                        <div class="form-inline">
-                            <label class='col'>[[user.email]]</label>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class='infoHeading col-2'>email</label>
-                        <div class="form-inline">
-                            <label class='col'>[[user.number]]</label>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class='infoHeading col-2'>Risk</label>
-                        <div class="form-inline">
-                            <label class='col'>[[user.risk]]</label>
-                        </div>
-                    </div>
+                    </form>
+                    
                 </div>
-                <hr class="text-light w-75 d-block d-sm-none bg-primary">
+            
             </div>
+
+
         </form>
     </div>
 
@@ -144,7 +143,6 @@
     </div>
 
 </body>
-
 </html>
 
 <script>
