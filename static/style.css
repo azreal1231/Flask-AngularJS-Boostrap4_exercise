@@ -1,3 +1,7 @@
+*{
+    color: white;
+}
+
 body {
     background-color: rgb(26, 26, 26);
 }
@@ -32,4 +36,17 @@ body {
 .btnEdit{
     position: relative;
     left: 50%; 
+}
+
+.extraInfo label{
+    color: yellow;
+}
+
+/* .infoHeading{
+    position: relative;
+    margin-left: 4%;
+} */
+
+.collapse{
+    position: relative;
 }

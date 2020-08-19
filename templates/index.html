@@ -10,13 +10,16 @@
     <div class="container">
         <form class="form border border-info">
             <div class="form-group row text-light">
+                <!-- Headings -->
                 <label class="col-2 d-none d-sm-block">Name</label>
                 <label class="col-2 d-none d-sm-block">Cash</label>
                 <label class="col-4 d-none d-sm-block">Email</label>
                 <label class="col-2 d-none d-sm-block">Number</label>
                 <label class="col-2 d-none d-sm-block">Risk</label>
             </div>
-            <div ng-repeat="user in users | filter:filters.cmd" class="form-group row">
+            <!-- Rows populated with ng-repeat -->
+            <div ng-repeat="user in users| filter:filters.cmd track by $index" class="form-group row"
+                data-toggle="collapse" data-target="#entryInfo[[$index]]" ng-click="editData(user)">
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-inline">
                         <label class='text-light col-3 d-block d-sm-none '>Name</label>
@@ -45,6 +48,41 @@
                     <div class="form-inline">
                         <label class='text-light col-3  d-block d-sm-none '>Risk</label>
                         <label class='text-light'>[[user.risk]]</label>
+                    </div>
+                </div>
+
+                <!-- The extra info div -->
+                <div id="entryInfo[[$index]]" class="container-fluid collapse extraInfo">
+                    <br>
+                    <div class="form-group row">
+                        <label class='infoHeading col-2'>Name</label>
+                        <div class="col">
+                            <label>[[user.Joshua]]</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class='infoHeading col-2'>Cash</label>
+                        <div class="form-inline">
+                            <label class='col'>[[user.cash]]</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class='infoHeading col-2'>Risk</label>
+                        <div class="form-inline">
+                            <label class='col'>[[user.email]]</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class='infoHeading col-2'>email</label>
+                        <div class="form-inline">
+                            <label class='col'>[[user.number]]</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class='infoHeading col-2'>Risk</label>
+                        <div class="form-inline">
+                            <label class='col'>[[user.risk]]</label>
+                        </div>
                     </div>
                 </div>
                 <hr class="text-light w-75 d-block d-sm-none bg-primary">
@@ -196,6 +234,12 @@
             console.log(window.location.href)
             // window.location = "/edit/" + "-" + name + "-" + cash + "-" + risk + "-" + number + "-" + email
             location.replace("/edit/" + "-" + name + "-" + cash + "-" + risk + "-" + number + "-" + email)
+        }
+
+        $scope.editData = function(user){
+            console.log(user)
+            // user.name="pig";
+            user.Joshua = "pig";
         }
 
         GetDataService.Call('ReturnUsers', 'AllUsers').then(
