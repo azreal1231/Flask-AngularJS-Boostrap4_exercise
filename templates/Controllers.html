@@ -7,26 +7,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/constroller_style.css">
 </head>
-<body>
-    <div class="container" ng-app="broadCasting">
-        <div class="wrapper" ng-controller="cntrl_1">
+<body class="bg-dark" ng-app="broadCasting" ng-controller="cntrl_1">
+    <div class="container">
+        <div class="wrapper">
             <div class="well well-1 text-center">
-                <h3>Controller1</h3>
-                <button class="btn btn-primary" ng-click="triggerBroadcast()">{[ mainCtrlBtnLabel ]}</button>
-
-
-
-                <div class="well well-2 text-center" ng-controller="cntrl_2">
-                    <h3>Controller 2</h3>
-                    <button class="btn btn-primary" ng-disabled="btn_status">{[ btn_status_msg ]}</button>
-                </div>
-            </div>
-
-            <div class="well well-3 text-center" ng-controller="cntrl_3">
-                <h3>Controller 3</h3>
-                <button class="btn btn-primary" ng-disabled="btn_status">{[ btn_status_msg ]}</button>
+                <button class="btn btn-primary" ng-click="triggerBroadcast()">Populate</button>
+{% include 'components/minimenu.html' %}
             </div>
         </div>
     </div>
@@ -37,46 +26,28 @@ angular.module('broadCasting',[]);
 var app = angular.module('broadCasting', []);
 app.controller('cntrl_1',function($scope , $rootScope)
 {
-    $rootScope.btn_status=true;
-    $rootScope.mainCtrlBtnLabel = "enable controller-2 and controller-3 buttons"
-    $rootScope.btn_status_msg="waiting for broadcast event to enable me";
-    $scope.triggerBroadcast= function()
+    $scope.triggerBroadcast = function()
     {
-        $scope.$broadcast('enable_Btns',{"btnEnable": false,"message":"yey ! I got enabled"});
+        var data = [
+            {'FunctionName':'edward', 'icon':'fa fa-address-book', 'FunctionValue':'contact'},
+            {'FunctionName':'adesh', 'icon':'fa fa-anchor', 'FunctionValue':'ancor'}
+        ];
+
+        $scope.$broadcast('populateMiniMenu', data);
     }
-    $scope.$on('btn_enabled',function(event,data)
+
+    $scope.$on('fromMiniMenu',function(event, data)
     {
-        $rootScope.mainCtrlBtnLabel =data.main_ctrl_msg;
+        console.log(event);
+        console.log(data);
     });
 
+
 });
 
-app.controller('cntrl_2',function($scope , $rootScope)
-{
-    $scope.$on('enable_Btns',function(event,data)
-    {
-        console.log(data.btnEnable);
-        $rootScope.btn_status = data.btnEnable;
-        $rootScope.btn_status_msg=data.message;
-    })
-});
 
 </script>
-<script>
-app.controller('cntrl_3',function($scope , $rootScope,$timeout)
-{
-    $scope.$on('enable_Btns',function(event,data)
-    {
-        console.log(data.btnEnable);
-        $rootScope.btn_status = data.btnEnable;
-        $rootScope.btn_status_msg=data.message;
-        $timeout(function()
-        {
-            $scope.$emit('btn_enabled',{"main_ctrl_msg":"yes I enabled it"});
-        },1000)
-    });
-});
-</script>
+<script src="/static/minimenu.js"></script>
 <script>
 app.config(['$interpolateProvider', function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{[');
