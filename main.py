@@ -36,6 +36,12 @@ def getdata():
 def loadSecondPage():
     return render_template('second-page.html')
 
+
+@app.route("/Controllers")
+def Controllers():
+    return render_template('Controllers.html')
+
+
 @app.route("/edit/<data>", methods=['GET', 'POST'])
 def editPage(data=None):
     return render_template('edit.html', data=data)
