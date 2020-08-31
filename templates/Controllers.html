@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/static/constroller_style.css">
 </head>
+
 <body>
     <div class="container" ng-app="broadCasting">
         <div class="wrapper" ng-controller="cntrl_1">
@@ -23,63 +25,44 @@
                     <button class="btn btn-primary" ng-disabled="btn_status">{[ btn_status_msg ]}</button>
                 </div>
             </div>
-
-            <div class="well well-3 text-center" ng-controller="cntrl_3">
-                <h3>Controller 3</h3>
-                <button class="btn btn-primary" ng-disabled="btn_status">{[ btn_status_msg ]}</button>
-            </div>
         </div>
     </div>
+    {% include "components/mini-menu.html" %}
 </body>
+
 </html>
 <script>
-angular.module('broadCasting',[]);
-var app = angular.module('broadCasting', []);
-app.controller('cntrl_1',function($scope , $rootScope)
-{
-    $rootScope.btn_status=true;
-    $rootScope.mainCtrlBtnLabel = "enable controller-2 and controller-3 buttons"
-    $rootScope.btn_status_msg="waiting for broadcast event to enable me";
-    $scope.triggerBroadcast= function()
-    {
-        $scope.$broadcast('enable_Btns',{"btnEnable": false,"message":"yey ! I got enabled"});
-    }
-    $scope.$on('btn_enabled',function(event,data)
-    {
-        $rootScope.mainCtrlBtnLabel =data.main_ctrl_msg;
+    angular.module('broadCasting', []);
+    var app = angular.module('broadCasting', []);
+    app.controller('cntrl_1', function ($scope, $rootScope) {
+        $rootScope.btn_status = true;
+        $rootScope.mainCtrlBtnLabel = "enable controller-2 and controller-3 buttons"
+        $rootScope.btn_status_msg = "waiting for broadcast event to enable me";
+        $scope.triggerBroadcast = function () {
+            $scope.$broadcast('enable_Btns', { "btnEnable": false, "message": "yey ! I got enabled" });
+        }
+        $scope.$on('btn_enabled', function (event, data) {
+            $rootScope.mainCtrlBtnLabel = data.main_ctrl_msg;
+        });
+
     });
 
-});
-
-app.controller('cntrl_2',function($scope , $rootScope)
-{
-    $scope.$on('enable_Btns',function(event,data)
-    {
-        console.log(data.btnEnable);
-        $rootScope.btn_status = data.btnEnable;
-        $rootScope.btn_status_msg=data.message;
-    })
-});
-
-</script>
-<script>
-app.controller('cntrl_3',function($scope , $rootScope,$timeout)
-{
-    $scope.$on('enable_Btns',function(event,data)
-    {
-        console.log(data.btnEnable);
-        $rootScope.btn_status = data.btnEnable;
-        $rootScope.btn_status_msg=data.message;
-        $timeout(function()
-        {
-            $scope.$emit('btn_enabled',{"main_ctrl_msg":"yes I enabled it"});
-        },1000)
+    app.controller('cntrl_2', function ($scope, $rootScope) {
+        $scope.$on('enable_Btns', function (event, data) {
+            console.log(data.btnEnable);
+            $rootScope.btn_status = data.btnEnable;
+            $rootScope.btn_status_msg = data.message;
+        })
     });
-});
+
+
 </script>
+
+<script src="/static/mini-menu.js"></script>
+
 <script>
-app.config(['$interpolateProvider', function ($interpolateProvider) {
-    $interpolateProvider.startSymbol('{[');
-    $interpolateProvider.endSymbol(']}');
-}]);
+    app.config(['$interpolateProvider', function ($interpolateProvider) {
+        $interpolateProvider.startSymbol('{[');
+        $interpolateProvider.endSymbol(']}');
+    }]);
 </script>

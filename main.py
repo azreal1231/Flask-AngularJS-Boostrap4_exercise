@@ -26,11 +26,23 @@ def getdata():
     Records = []
     if(method_name == "ReturnUsers"):
         Records = rpc.returnUsers(method_name, params)
+    if(method_name == "ReturnCities"):
+        Records = rpc.returnCities()
+    if method_name == "ReturnCitiesSmall":
+        Records = rpc.returnCitiesSmall()
     elif(method_name == "something"):
         Records = []
     response = {'Result': 'OK', 'Records': Records}
     response = json.dumps(response)
     return response
+
+# if(method_name == "ReturnUsers"):
+#         Records = rpc.returnUsers(method_name, params)
+#     elif(method_name == "something"):
+#         Records = []
+#     response = {'Result': 'OK', 'Records': Records}
+#     response = json.dumps(response)
+#     return response
 
 @app.route("/second-page")
 def loadSecondPage():
