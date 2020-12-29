@@ -232,3 +232,4 @@ fabric.properties
 out
 gen
 .gitignore
+/W-venv/
