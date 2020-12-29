@@ -11,6 +11,8 @@ def index():
     if request.method == 'POST':
         pass
     else:
+        import subprocess
+        label = subprocess.check_output(["git", "describe"]).strip()
         return render_template('index.html')
 
 
@@ -24,17 +26,18 @@ def getdata():
     print('-' * 40)
     print(params)
     Records = []
-    if(method_name == "ReturnUsers"):
+    if method_name == "ReturnUsers":
         Records = rpc.returnUsers(method_name, params)
-    if(method_name == "ReturnCities"):
+    if method_name == "ReturnCities":
         Records = rpc.returnCities()
     if method_name == "ReturnCitiesSmall":
         Records = rpc.returnCitiesSmall()
-    elif(method_name == "something"):
+    elif method_name == "something":
         Records = []
     response = {'Result': 'OK', 'Records': Records}
     response = json.dumps(response)
     return response
+
 
 # if(method_name == "ReturnUsers"):
 #         Records = rpc.returnUsers(method_name, params)
@@ -58,5 +61,6 @@ def Controllers():
 def editPage(data=None):
     return render_template('edit.html', data=data)
 
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=8000)

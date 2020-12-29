@@ -1,5 +1,6 @@
-app.controller('graphCtrl', function ($scope, $rootScope) {
 
+app.controller('graphCtrl', function ($scope, $rootScope) {
+    var version = 112
     $scope.massPopChart = null;
 
     $rootScope.$on('populate_graph', function (event, data) {
