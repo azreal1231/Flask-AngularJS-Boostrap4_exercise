@@ -11,8 +11,6 @@ def index():
     if request.method == 'POST':
         pass
     else:
-        import subprocess
-        label = subprocess.check_output(["git", "describe"]).strip()
         return render_template('index.html')
 
 
