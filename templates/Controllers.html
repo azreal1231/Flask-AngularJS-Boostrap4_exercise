@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/constroller_style.css">
+</head>
+<body class="bg-dark" ng-app="broadCasting" ng-controller="cntrl_1">
+    <div class="container">
+        <div class="wrapper">
+            <div class="well well-1 text-center">
+                <button class="btn btn-primary" ng-click="triggerBroadcast()">Populate</button>
+{% include 'components/minimenu.html' %}
+            </div>
+        </div>
+    </div>
+    {% include "components/mini-menu.html" %}
+</body>
+
+</html>
+<script>
+angular.module('broadCasting',[]);
+var app = angular.module('broadCasting', []);
+app.controller('cntrl_1',function($scope , $rootScope)
+{
+    $scope.triggerBroadcast = function()
+    {
+        var data = [
+            {'FunctionName':'edward', 'icon':'fa fa-address-book', 'FunctionValue':'contact'},
+            {'FunctionName':'adesh', 'icon':'fa fa-anchor', 'FunctionValue':'ancor'}
+        ];
+
+        $scope.$broadcast('populateMiniMenu', data);
+    }
+
+    $scope.$on('fromMiniMenu',function(event, data)
+    {
+        console.log(event);
+        console.log(data);
+    });
+
+
+});
+
+
+</script>
+<script src="/static/minimenu.js"></script>
+<script>
+app.config(['$interpolateProvider', function ($interpolateProvider) {
+    $interpolateProvider.startSymbol('{[');
+    $interpolateProvider.endSymbol(']}');
+}]);
+</script>

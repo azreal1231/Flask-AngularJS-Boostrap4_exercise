@@ -1,4 +1,52 @@
-body
-{
-    background: rgb(116, 197, 230);
+/* *{
+    color: white;
+} */
+
+body {
+    background-color: rgb(26, 26, 26);
+}
+
+.box{
+    width:400px;
+    height: 400px;
+    padding: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: centre;
+    z-index: 9;
+    border-radius: 9999999999999999999999999999999999999999999999999999999999999999999999999999999999px;
+    background: url(/static/pacman.png);
+    -webkit-background-size: 100% auto;
+    /* ez */
+}
+
+.info{
+    position: absolute;
+    top: 30%;
+}
+
+.btnX{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.btnEdit{
+    position: relative;
+    left: 50%; 
+}
+/* 
+.extraInfo label{
+    color: yellow;
+} */
+
+/* .infoHeading{
+    position: relative;
+    margin-left: 4%;
+} */
+
+.collapse{
+    position: relative;
 }

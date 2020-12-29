@@ -1,0 +1,27 @@
+.well{
+    padding:25px;
+  
+   margin: 8% auto;
+   border-radius:4px;
+ }
+ .wrapper{
+   background:#444;
+   padding:15px 25px;
+   margin:10% auto;
+   border-radius:5px;
+ }
+ .well-1{
+ 
+   background: #444;
+   color:#eee;
+ 
+ 
+ }
+ 
+ .well-2{
+   background: #ddd;
+ }
+ 
+ .well-3{
+   background: #bbb;
+ }
